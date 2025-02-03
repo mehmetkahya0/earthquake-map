@@ -67,17 +67,28 @@ function getMagnitudeColor(magnitude) {
     return { color: '#28a745', class: 'low' };
 }
 
+function createLoadingMessage() {
+    return `
+        <div class="loading-message">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading earthquake data...</p>
+        </div>
+    `;
+}
+
 function createMarker(earthquake) {
     const { coordinates } = earthquake.geometry;
     const { mag } = earthquake.properties;
     const { color } = getMagnitudeColor(mag);
 
-    const marker = L.circle([coordinates[1], coordinates[0]], {
+    // Changed to circleMarker for better stability
+    const marker = L.circleMarker([coordinates[1], coordinates[0]], {
+        radius: Math.min(mag * 5, 25), // Limit maximum size
         color: color,
         fillColor: color,
-        fillOpacity: 0.5,
-        radius: Math.pow(2, mag) * 2000, // Exponential scaling for better visualization
-        weight: 1
+        fillOpacity: 0.7,
+        weight: 1,
+        stroke: true
     });
 
     marker.bindPopup(createPopupContent(earthquake));
@@ -98,8 +109,9 @@ function updateMapView(earthquakes) {
 }
 
 function updateHeatmapData(earthquakes) {
+    const maxMagnitude = Math.max(...earthquakes.map(eq => eq.properties.mag));
     const heatmapData = earthquakes.map(eq => {
-        const intensity = Math.min(eq.properties.mag / 10, 1); // Normalize magnitude
+        const intensity = eq.properties.mag / maxMagnitude;
         return [
             eq.geometry.coordinates[1],
             eq.geometry.coordinates[0],
@@ -113,12 +125,31 @@ function updateHeatmapData(earthquakes) {
 function toggleView(viewType) {
     currentView = viewType;
     
+    // Clear existing layers
+    clearMap();
+    heatmapLayer.setLatLngs([]);
+    
+    // Get current earthquakes
+    const listContainer = document.getElementById('list-view');
+    const earthquakeElements = listContainer.getElementsByClassName('earthquake-item');
+    const earthquakes = Array.from(earthquakeElements).map((el, index) => ({
+        geometry: {
+            coordinates: [
+                markers[index].getLatLng().lng,
+                markers[index].getLatLng().lat
+            ]
+        },
+        properties: {
+            mag: parseFloat(el.querySelector('.magnitude').textContent)
+        }
+    }));
+
     if (viewType === 'heatmap') {
-        markers.forEach(marker => marker.remove());
-        heatmapLayer.setLatLngs(heatmapLayer.getLayers());
+        updateHeatmapData(earthquakes);
     } else {
-        markers.forEach(marker => marker.addTo(map));
-        heatmapLayer.setLatLngs([]);
+        earthquakes.forEach((eq, index) => {
+            markers[index].addTo(map);
+        });
     }
 }
 
@@ -131,7 +162,7 @@ async function updateEarthquakes(timeFrame) {
         clearMap();
         
         const listContainer = document.getElementById('list-view');
-        listContainer.innerHTML = '<div class="loading-message">Loading earthquakes...</div>';
+        listContainer.innerHTML = createLoadingMessage();
 
         // Create marker layer group and clear old markers
         if (map) {
@@ -206,7 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
     updateEarthquakes('1');
     
     // Auto refresh every 5 minutes
-    let refreshInterval = setInterval(() => updateEarthquakes(currentTimeFrame), 300000);
+    let refreshInterval;
+    
+    function startAutoRefresh() {
+        clearInterval(refreshInterval);
+        refreshInterval = setInterval(() => updateEarthquakes(currentTimeFrame), 300000);
+    }
+    
+    // Restart refresh timer when user interacts
+    document.querySelectorAll('.filter-btn, .view-btn, .tab-btn').forEach(btn => {
+        btn.addEventListener('click', startAutoRefresh);
+    });
+    
+    startAutoRefresh();
     
     // Handle filter buttons with error handling
     document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -315,3 +358,29 @@ async function updateNews() {
         newsContainer.innerHTML = '<p class="error-message">Unable to load earthquake news.</p>';
     }
 }
+
+// Add these new CSS animations to your styles.css
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+        100% { opacity: 0.6; transform: scale(1); }
+    }
+`;
+document.head.appendChild(style);
+
+// Add resize handler
+window.addEventListener('resize', () => {
+    if (map) {
+        map.invalidateSize();
+        const earthquakes = markers.map(marker => ({
+            geometry: {
+                coordinates: [marker.getLatLng().lng, marker.getLatLng().lat]
+            }
+        }));
+        if (earthquakes.length > 0) {
+            updateMapView(earthquakes);
+        }
+    }
+});
