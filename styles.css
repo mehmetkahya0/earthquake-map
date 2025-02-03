@@ -1,3 +1,59 @@
+:root {
+    /* Colors */
+    --color-primary: #2f855a;
+    --color-secondary: #3182ce;
+    --color-success: #38a169;
+    --color-danger: #dc3545;
+    --color-warning: #f6ad55;
+    --color-info: #4c51bf;
+    
+    /* Background Colors */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-dark: #1a365d;
+    --bg-darker: #2c5282;
+    
+    /* Text Colors */
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-light: #ffffff;
+    --text-muted: #718096;
+    
+    /* Border Colors */
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e0;
+    
+    /* Shadow */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 24px rgba(0,0,0,0.12);
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-full: 30px;
+    
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    
+    /* Font Sizes */
+    --text-xs: 0.85rem;
+    --text-sm: 0.9rem;
+    --text-base: 1rem;
+    --text-lg: 1.2rem;
+    --text-xl: 1.6rem;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,81 +62,103 @@
 
 body {
     font-family: 'Inter', 'Poppins', sans-serif;
-    background-color: #f8fafc;
+    background-color: var(--bg-primary);
 }
 
 .navbar {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    padding: 1.2rem 2.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    color: white;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    padding: var(--space-5) var(--space-6);
+    box-shadow: var(--shadow-md);
+    color: var(--text-light);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .logo {
-    font-size: 1.6rem;
+    font-size: var(--text-xl);
     font-weight: 600;
-    color: white;
+    color: var(--text-light);
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 1rem;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 30px;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-full);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .filter-btn, .view-btn {
-    padding: 8px 16px;
+    padding: var(--space-3) var(--space-4);
     border: none;
-    border-radius: 20px;
-    background-color: transparent;
-    color: rgba(255,255,255,0.8);
+    border-radius: var(--radius-full);
+    background-color: rgba(255,255,255,0.12);
+    color: var(--bg-dark);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
 }
 
-.filter-btn:hover, .view-btn:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
+.view-btn {
+    color: var(--text-primary);
+    background-color: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.view-btn:hover {
+    background-color: rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+}
+
+.filter-btn:hover {
+    background-color: rgba(255,255,255,0.2);
+    transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    background-color: white;
-    color: #1e3c72;
+    background-color: var(--color-primary);
+    color: var(--text-light);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
 }
 
 .view-btn.active {
-    background-color: #28a745;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--text-light);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
 }
+
 
 .container {
     display: grid;
     grid-template-columns: 1fr 380px;
-    gap: 24px;
-    padding: 24px;
+    gap: var(--space-6);
+    padding: var(--space-6);
     height: calc(100vh - 80px);
     max-width: 2000px;
     margin: 0 auto;
-    background: #f8fafc;
+    background: var(--bg-primary);
     overflow: hidden;
 }
 
 .map-container {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
     position: relative;
     z-index: 1; /* Keep map below navbar */
@@ -92,9 +170,9 @@ body {
 }
 
 .info-panel {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     max-height: 100%;
@@ -103,19 +181,20 @@ body {
 
 .panel-header {
     padding: 20px;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid var(--border-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #fff;
+    background: var(--bg-secondary);
     position: sticky;
     top: 0;
     z-index: 10;
 }
 
 .panel-header h2 {
-    font-size: 1.2rem;
-    color: #333;
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .tab-buttons {
@@ -127,14 +206,15 @@ body {
     padding: 5px 12px;
     border: none;
     border-radius: 15px;
-    background: #f0f2f5;
+    background: #e2e8f0;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
 }
 
 .tab-btn.active {
-    background: #007bff;
-    color: white;
+    background: var(--color-secondary);
+    color: var(--text-light);
 }
 
 .earthquake-list-container {
@@ -142,7 +222,8 @@ body {
     overflow-y: auto;
     padding: 20px;
     scrollbar-width: thin;
-    scrollbar-color: #cbd5e0 #f1f5f9;
+    scrollbar-color: var(--border-medium) #f1f5f9;
+    background-color: var(--bg-primary);
 }
 
 .earthquake-list-container::-webkit-scrollbar {
@@ -155,7 +236,7 @@ body {
 }
 
 .earthquake-list-container::-webkit-scrollbar-thumb {
-    background: #cbd5e0;
+    background: var(--border-medium);
     border-radius: 3px;
     transition: background 0.3s ease;
 }
@@ -173,26 +254,27 @@ body {
 .news-item {
     padding: 20px;
     border-radius: 12px;
-    background: white;
+    background: var(--bg-secondary);
     margin-bottom: 15px;
-    border: 1px solid #edf2f7;
-    transition: all 0.3s ease;
+    border: 1px solid var(--border-light);
+    transition: var(--transition-normal);
 }
 
 .news-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-lg);
 }
 
 .news-item h3 {
-    font-size: 1rem;
+    font-size: var(--text-base);
     margin-bottom: 8px;
-    color: #333;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .news-item p {
-    font-size: 0.9rem;
-    color: #666;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
     line-height: 1.4;
     margin-bottom: 10px;
 }
@@ -230,19 +312,19 @@ body {
 
 .news-detail {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
     margin: 8px 0;
 }
 
 .no-news, .error-message {
     text-align: center;
     padding: 20px;
-    color: #666;
+    color: var(--text-secondary);
     font-style: italic;
 }
 
 .error-message {
-    color: #dc3545;
+    color: var(--color-danger);
 }
 
 .earthquake-item {
@@ -252,15 +334,15 @@ body {
     padding: 20px;
     border-radius: 16px;
     margin-bottom: 16px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    transition: var(--transition-normal);
 }
 
 .earthquake-item:hover {
     transform: translateX(5px) translateY(-2px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-    border-color: #cbd5e0;
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-medium);
 }
 
 .magnitude {
@@ -270,11 +352,11 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    font-size: 1.2rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    color: white;
+    color: var(--text-light);
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .earthquake-info {
@@ -285,42 +367,43 @@ body {
 
 .earthquake-place {
     font-weight: 500;
-    color: #333;
+    color: var(--text-primary);
     word-break: break-word;
     line-height: 1.4;
+    font-size: var(--text-base);
 }
 
 .earthquake-time {
-    font-size: 0.85rem;
-    color: #666;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
 }
 
 .magnitude-high {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, var(--color-danger) 0%, #c53030 100%);
 }
 
 .magnitude-medium {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, var(--color-warning) 0%, #dd6b20 100%);
 }
 
 .magnitude-low {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    background: linear-gradient(135deg, var(--color-success) 0%, #2f855a 100%);
 }
 
 @media (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr 340px;
-        gap: 20px;
-        padding: 20px;
+        gap: var(--space-5);
+        padding: var(--space-5);
     }
 }
 
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
-        padding: 16px;
+        padding: var(--space-4);
         height: auto;
-        gap: 16px;
+        gap: var(--space-4);
     }
     
     .map-container {
@@ -381,7 +464,7 @@ body {
     text-align: center;
     padding: 30px;
     margin: 12px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 500;
     display: flex;
     flex-direction: column;
@@ -392,8 +475,9 @@ body {
 .loading-message {
     background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
     padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-info);
 }
 
 .loading-message i {
@@ -404,44 +488,51 @@ body {
 .error-message {
     background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
     padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
 .no-data {
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    color: #475569;
+    color: #2d3748;
 }
 
 .time-filters {
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 8px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.2);
 }
 
 .view-btn {
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     background-color: #f0f2f5;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-normal);
 }
 
 .view-btn.active {
     background-color: #28a745;
-    color: white;
+    color: var(--text-light);
 }
 
 /* Fix map popup styles */
 .popup-content {
     min-width: 200px;
     padding: 12px;
+    color: var(--text-primary);
 }
 
 .popup-content h3 {
     margin-bottom: 8px;
     font-size: 1.1rem;
+}
+
+.popup-content a {
+    color: var(--color-secondary);
+    font-weight: 500;
 }
 
 /* Fix heatmap layer visibility */
@@ -545,6 +636,11 @@ body {
     vertical-align: middle;
 }
 
+.view-btn i {
+    font-size: 14px;
+    margin-right: 4px;
+}
+
 /* Ensure icons are visible in the navbar */
 .navbar .logo i {
     font-size: 24px;
@@ -560,4 +656,10 @@ body {
 /* Ensure circle markers don't move */
 .leaflet-interactive {
     transition: none !important;
+}
+
+/* Add active button hover effect */
+.filter-btn.active:hover, .view-btn.active:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
