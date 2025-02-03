@@ -1,4 +1,7 @@
 :root {
+
+    overflow: hidden;
+
     /* Colors */
     --color-primary: #2f855a;
     --color-secondary: #3182ce;

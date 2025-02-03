@@ -40,7 +40,7 @@ A real-time earthquake monitoring application that visualizes seismic activity w
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/earthquake-tracker.git
+   git clone https://github.com/mehmetkahya0/earthquake-tracker.git
    ```
 
 2. Navigate to the project directory:
