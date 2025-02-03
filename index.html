@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Tracker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌍 Earthquake Tracker</div>
+        <div class="nav-links">
+            <button class="view-btn active" data-view="markers">Markers</button>
+            <button class="view-btn" data-view="heatmap">Heatmap</button>
+            <div class="time-filters">
+                <button class="filter-btn active" data-days="1">24 Hours</button>
+                <button class="filter-btn" data-days="7">7 Days</button>
+                <button class="filter-btn" data-days="30">30 Days</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        <div class="info-panel">
+            <div class="panel-header">
+                <h2>Earthquake Data</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="list">List</button>
+                    <button class="tab-btn" data-tab="news">News</button>
+                </div>
+            </div>
+            <div id="list-view" class="earthquake-list-container"></div>
+            <div id="news-view" class="news-container" style="display: none;"></div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
